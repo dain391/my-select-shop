@@ -1,8 +1,5 @@
 package com.sparta.myselectshop.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +44,7 @@ public class ProductService {
 		return new ProductResponseDto(product);
 	}
 
+	@Transactional(readOnly = true)
 	public Page<ProductResponseDto> getProducts(User user,
 												int page, int size, String sortBy, boolean isAsc) {
 		// 페이징 처리
