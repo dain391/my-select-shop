@@ -31,7 +31,7 @@ public class ProductController {
 	// 관심 상품 등록
 	@PostMapping("/products")
 	public ProductResponseDto createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal
-											UserDetailsImpl userDetails) {
+	UserDetailsImpl userDetails) {
 		return productService.createProduct(requestDto, userDetails.getUser());
 	}
 
@@ -49,6 +49,16 @@ public class ProductController {
 		@RequestParam("sortBy") String sortBy,
 		@RequestParam("isAsc") boolean isAsc,
 		@AuthenticationPrincipal UserDetailsImpl userDetails) {
-		return productService.getProducts(userDetails.getUser(), page-1, size, sortBy, isAsc);
+		return productService.getProducts(userDetails.getUser(), page - 1, size, sortBy, isAsc);
+	}
+
+	// 폴더에 관심 상품 추가
+	@PostMapping("/products/{productId}/folder")
+	public void addFolder(
+		@PathVariable Long productId,
+		@RequestParam Long folderId,
+		@AuthenticationPrincipal UserDetailsImpl userDetails
+	) {
+		productService.addFolder(productId, folderId, userDetails.getUser());
 	}
 }
